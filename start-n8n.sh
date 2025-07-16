@@ -3,7 +3,7 @@
 cd /home/filip/Documents/Projekti/n8n || exit 1
 
 # Start both containers
-docker compose up -d
+docker compose -f docker-compose.local.yml up -d
 
 # Wait for ngrok to come online
 echo "Waiting for ngrok..."

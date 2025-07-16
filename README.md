@@ -6,24 +6,25 @@ This project runs a local or server-based [n8n](https://n8n.io/) instance that c
 
 ## 🚀 Features
 
-- 🧩 Connects n8n to ClickUp
-- 🛠️ Manually sets task IDs and comments ClickUp tickets
-- 🔐 Basic Auth protection
-- 🌐 Exposes local instance with Ngrok (for testing webhooks)
-- 📦 File-based storage (no external DB required)
+* 🧩 Connects n8n to ClickUp
+* 🛠️ Manually sets task IDs and comments ClickUp tickets
+* 🔐 Basic Auth protection
+* 🌐 Exposes local instance with Ngrok (for testing webhooks)
+* 📦 File-based storage (no external DB required)
 
 ---
 
 ## 📁 Project Structure
 
 ```
-├── docker-compose.yml        # Docker setup for n8n + ngrok
-├── start-n8n.sh              # Local-only startup script using ngrok
-├── .env                      # Your actual environment variables (not committed)
-├── .env.example              # Example env file for reference
-├── project_ids.json          # Your actual config (not committed)
-├── project_ids.example.json  # Example config with structure
-├── n8n_data/                 # Volume-mapped storage (JSON-based)
+├── docker-compose.local.yml   # Local dev setup with ngrok
+├── docker-compose.prod.yml    # Production setup without ngrok
+├── start-n8n.sh               # Local-only startup script using ngrok
+├── .env                       # Your actual environment variables (not committed)
+├── .env.example               # Example env file for reference
+├── project_ids.json           # Your actual config (not committed)
+├── project_ids.example.json   # Example config with structure
+├── n8n_data/                  # Volume-mapped storage (JSON-based)
 ```
 
 ---
@@ -39,7 +40,7 @@ cp project_ids.example.json project_ids.json
 
 2. Add your ClickUp config and ngrok token to `.env` and `project_ids.json`.
 
-3. Run the local startup script (includes ngrok):
+3. Start containers using the local config:
 
 ```bash
 chmod +x start-n8n.sh
@@ -48,10 +49,10 @@ chmod +x start-n8n.sh
 
 This will:
 
-- Start both n8n and ngrok
-- Wait for a public ngrok URL
-- Inject that URL into `.env` as `WEBHOOK_URL`
-- Restart n8n to apply the updated webhook setting
+* Start both n8n and ngrok
+* Wait for a public ngrok URL
+* Inject that URL into `.env` as `WEBHOOK_URL`
+* Restart n8n to apply the updated webhook setting
 
 Access UI at: `http://localhost:5678`
 
@@ -80,7 +81,7 @@ cp project_ids.example.json project_ids.json
 4. Start n8n (without ngrok):
 
 ```bash
-docker compose up -d
+docker compose -f docker-compose.prod.yml up -d
 ```
 
 Set up a reverse proxy (e.g., NGINX or Caddy) to expose it securely via HTTPS.
@@ -91,10 +92,10 @@ Set up a reverse proxy (e.g., NGINX or Caddy) to expose it securely via HTTPS.
 
 See `.env.example` for available options:
 
-- `N8N_BASIC_AUTH_ACTIVE`, `N8N_BASIC_AUTH_USER`, `N8N_BASIC_AUTH_PASSWORD`
-- `N8N_HOST`, `N8N_PORT`, `WEBHOOK_URL`
-- `NGROK_AUTHTOKEN`
-- `TZ` — timezone for cron jobs
+* `N8N_BASIC_AUTH_ACTIVE`, `N8N_BASIC_AUTH_USER`, `N8N_BASIC_AUTH_PASSWORD`
+* `N8N_HOST`, `N8N_PORT`, `WEBHOOK_URL`
+* `NGROK_AUTHTOKEN`
+* `TZ` — timezone for cron jobs
 
 ---
 
@@ -127,11 +128,10 @@ The `project_ids.json` file maps ClickUp folders to task prefixes and internal v
 
 ## 📌 Notes
 
-- `start-n8n.sh` is **for local development only** and uses ngrok.
-- `project_ids.json` and `.env` are **excluded from Git** for security and portability.
-- This setup assumes no external database — all data is stored via Docker volume.
+* `start-n8n.sh` is **for local development only** and uses ngrok.
+* `project_ids.json` and `.env` are **excluded from Git** for security and portability.
+* This setup assumes no external database — all data is stored via Docker volume.
 
 ---
 
 Made with ❤️ using [n8n.io](https://n8n.io/) + [ClickUp](https://clickup.com/)
-
