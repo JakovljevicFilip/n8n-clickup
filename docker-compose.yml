@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    ports:
+      - 5678:5678
+    env_file:
+      - .env
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+      - ./project_ids.json:/data/project_ids.json
+
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    environment:
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
+    command: http n8n:5678
+    ports:
+      - 4040:4040

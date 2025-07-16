@@ -1,0 +1,14 @@
+[
+  {
+    "folder":"ClickUp",
+    "folder_id":"123456789",
+    "prefix":"CLC",
+    "value":1
+  },
+  {
+    "folder":"Platform - BE",
+    "folder_id":"123456789",
+    "prefix":"PBE",
+    "value":1
+  }
+]

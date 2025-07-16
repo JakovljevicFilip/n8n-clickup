@@ -1,0 +1,25 @@
+# Ignore local environment configuration
+.env
+project_ids.json
+
+# Ignore local volume data (file-based workflow storage)
+n8n_data/
+
+# Ignore ngrok logs and caches (if any)
+ngrok.log
+.ngrok2/
+
+# Ignore system/IDE-specific files
+.DS_Store
+Thumbs.db
+*.swp
+.idea
+
+# Node-related (in case you use custom scripts or install packages)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VSCode
+.vscode/
