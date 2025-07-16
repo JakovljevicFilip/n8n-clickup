@@ -10,4 +10,4 @@ services:
       - .env
     volumes:
       - ./n8n_data:/home/node/.n8n
-      - ./project_ids.json:/data/project_ids.json
+      - ./project_ids.json:/data/config/project_ids.json
